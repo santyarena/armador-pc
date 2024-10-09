@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import jsPDF from 'jspdf';  // Importamos jsPDF
-import 'jspdf-autotable';  // Importamos autoTable para la tabla en PDF
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 function PCBuilder({ products }) {
   const [selectedProcessor, setSelectedProcessor] = useState(null);
@@ -11,6 +11,11 @@ function PCBuilder({ products }) {
   const [selectedPowerSupply, setSelectedPowerSupply] = useState(null);
   const [selectedCase, setSelectedCase] = useState(null);
   const [selectedCooler, setSelectedCooler] = useState(null);
+  const [selectedWifi, setSelectedWifi] = useState(null);
+  const [selectedMonitor, setSelectedMonitor] = useState(null);
+  const [selectedKeyboard, setSelectedKeyboard] = useState(null);
+  const [selectedMouse, setSelectedMouse] = useState(null);
+  const [selectedHeadphones, setSelectedHeadphones] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
 
   // Filtrar los productos por categoría
@@ -22,7 +27,11 @@ function PCBuilder({ products }) {
   const powerSupplies = products.filter(product => product.category === 'Fuente de Poder');
   const cases = products.filter(product => product.category === 'Gabinete');
   const coolers = products.filter(product => product.category === 'Cooler');
-
+  const wifis = products.filter(product => product.category === 'Wifi');
+  const monitors = products.filter(product => product.category === 'Monitor');
+  const keyboards = products.filter(product => product.category === 'Teclado');
+  const mice = products.filter(product => product.category === 'Mouse');
+  const headphones = products.filter(product => product.category === 'Auriculares');
   // Función para sumar el precio total de los productos seleccionados
   const updateTotalPrice = () => {
     const prices = [
@@ -33,7 +42,12 @@ function PCBuilder({ products }) {
       selectedStorage?.price || 0,
       selectedPowerSupply?.price || 0,
       selectedCase?.price || 0,
-      selectedCooler?.price || 0
+      selectedCooler?.price || 0,
+      selectedWifi?.price || 0,
+      selectedMonitor?.price || 0,
+      selectedKeyboard?.price || 0,
+      selectedMouse?.price || 0,
+      selectedHeadphones?.price || 0,
     ];
     const sum = prices.reduce((acc, curr) => acc + Number(curr), 0);
     setTotalPrice(sum);
@@ -44,7 +58,6 @@ function PCBuilder({ products }) {
     const selected = processors.find(proc => proc.name === e.target.value);
     setSelectedProcessor(selected);
 
-    // Verificar compatibilidad con la motherboard seleccionada
     if (selectedMotherboard) {
       if (selected.brand === 'AMD' && selectedMotherboard.brand !== 'AMD') {
         alert('La motherboard seleccionada no es compatible con un procesador AMD');
@@ -61,7 +74,6 @@ function PCBuilder({ products }) {
     const selected = motherboards.find(mb => mb.name === e.target.value);
     setSelectedMotherboard(selected);
 
-    // Verificar compatibilidad con el procesador seleccionado
     if (selectedProcessor) {
       if (selectedProcessor.brand === 'AMD' && selected.brand !== 'AMD') {
         alert('El procesador seleccionado no es compatible con esta motherboard');
@@ -108,12 +120,39 @@ function PCBuilder({ products }) {
     setSelectedCooler(selected);
     updateTotalPrice();
   };
+  const handleWifiChange = (e) => {
+    const selected = wifis.find(wifi => wifi.name === e.target.value);
+    setSelectedWifi(selected);
+    updateTotalPrice();
+  };
 
+  const handleMonitorChange = (e) => {
+    const selected = monitors.find(monitor => monitor.name === e.target.value);
+    setSelectedMonitor(selected);
+    updateTotalPrice();
+  };
+
+  const handleKeyboardChange = (e) => {
+    const selected = keyboards.find(keyboard => keyboard.name === e.target.value);
+    setSelectedKeyboard(selected);
+    updateTotalPrice();
+  };
+
+  const handleMouseChange = (e) => {
+    const selected = mice.find(mouse => mouse.name === e.target.value);
+    setSelectedMouse(selected);
+    updateTotalPrice();
+  };
+
+  const handleHeadphonesChange = (e) => {
+    const selected = headphones.find(headphone => headphone.name === e.target.value);
+    setSelectedHeadphones(selected);
+    updateTotalPrice();
+  };
   // Función para generar el PDF con autoTable
   const generatePDF = () => {
     const doc = new jsPDF();
 
-    // Encabezado del presupuesto
     doc.setFontSize(12);
     doc.text("Presupuesto #1", 14, 15);
     doc.text("Fecha: 05/10/2024", 150, 15);
@@ -122,7 +161,6 @@ function PCBuilder({ products }) {
     doc.text("Tel.: 911-40859342", 14, 35);
     doc.text("CUIT: 23223648029", 14, 40);
 
-    // Tabla de productos seleccionados
     doc.autoTable({
       startY: 50,
       head: [['Cantidad', 'Descripción', 'Precio Unitario', 'IVA', 'Bonificación', 'Importe']],
@@ -135,16 +173,51 @@ function PCBuilder({ products }) {
         ['1', selectedPowerSupply ? selectedPowerSupply.name : 'No seleccionada', selectedPowerSupply ? `$${selectedPowerSupply.price}` : '0', '21%', '0%', selectedPowerSupply ? `$${selectedPowerSupply.price}` : '0'],
         ['1', selectedCase ? selectedCase.name : 'No seleccionado', selectedCase ? `$${selectedCase.price}` : '0', '21%', '0%', selectedCase ? `$${selectedCase.price}` : '0'],
         ['1', selectedCooler ? selectedCooler.name : 'No seleccionado', selectedCooler ? `$${selectedCooler.price}` : '0', '21%', '0%', selectedCooler ? `$${selectedCooler.price}` : '0'],
+        ['1', selectedWifi ? selectedWifi.name : 'No seleccionado', selectedWifi ? `$${selectedWifi.price}` : '0', '21%', '0%', selectedWifi ? `$${selectedWifi.price}` : '0'],
+        ['1', selectedMonitor ? selectedMonitor.name : 'No seleccionado', selectedMonitor ? `$${selectedMonitor.price}` : '0', '21%', '0%', selectedMonitor ? `$${selectedMonitor.price}` : '0'],
+        ['1', selectedKeyboard ? selectedKeyboard.name : 'No seleccionado', selectedKeyboard ? `$${selectedKeyboard.price}` : '0', '21%', '0%', selectedKeyboard ? `$${selectedKeyboard.price}` : '0'],
+        ['1', selectedMouse ? selectedMouse.name : 'No seleccionado', selectedMouse ? `$${selectedMouse.price}` : '0', '21%', '0%', selectedMouse ? `$${selectedMouse.price}` : '0'],
+        ['1', selectedHeadphones ? selectedHeadphones.name : 'No seleccionado', selectedHeadphones ? `$${selectedHeadphones.price}` : '0', '21%', '0%', selectedHeadphones ? `$${selectedHeadphones.price}` : '0'],
       ],
     });
 
-    // Totales
     doc.setFontSize(12);
     doc.text(`No Gravado/Exento: $${totalPrice}`, 14, doc.lastAutoTable.finalY + 10);
     doc.text(`Importe Total: $${totalPrice}`, 14, doc.lastAutoTable.finalY + 20);
     doc.text(`Son Pesos ${totalPrice} con 00/100`, 14, doc.lastAutoTable.finalY + 30);
 
-    // Guardar el PDF con el nombre del presupuesto
     doc.save("presupuesto_1.pdf");
   };
-};  
+
+  return (
+    <div className="pc-builder-container container">
+      <h2>Armador de PC</h2>
+
+      {/* Mostrar todas las secciones */}
+      {/* Sección de procesadores */}
+      <div className="builder-section">
+        <h3>Elige tu Procesador</h3>
+        <select onChange={handleProcessorChange}>
+          <option value="">Selecciona un procesador</option>
+          {processors.map(processor => (
+            <option key={processor.name} value={processor.name}>
+              {processor.name} - {processor.subSubCategory} - ${processor.price}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Continuar con el resto de las secciones de componentes */}
+      <button onClick={generatePDF}>Generar PDF</button>
+
+      <div className="summary">
+        <h3>Resumen de selección</h3>
+        <p>Procesador: {selectedProcessor ? `${selectedProcessor.name} - ${selectedProcessor.subSubCategory} - $${selectedProcessor.price}` : 'No seleccionado'}</p>
+        {/* Continuar mostrando el resto de los componentes seleccionados */}
+        <h3>Total: ${totalPrice}</h3>
+      </div>
+    </div>
+  );
+}
+
+export default PCBuilder;
