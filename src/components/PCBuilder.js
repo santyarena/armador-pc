@@ -53,6 +53,161 @@ function PCBuilder({ products }) {
     const sum = prices.reduce((acc, curr) => acc + Number(curr), 0);
     setTotalPrice(sum);
   };
+  {/* Sección de Motherboards */}
+  <div className="builder-section">
+    <h3>Elige tu Placa Madre</h3>
+    <select onChange={handleMotherboardChange}>
+      <option value="">Selecciona una placa madre</option>
+      {motherboards.map(motherboard => (
+        <option key={motherboard.name} value={motherboard.name}>
+          {motherboard.name} - {motherboard.subSubCategory} - ${motherboard.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Tarjetas Gráficas */}
+  <div className="builder-section">
+    <h3>Elige tu Tarjeta Gráfica</h3>
+    <select onChange={handleGraphicsCardChange}>
+      <option value="">Selecciona una tarjeta gráfica</option>
+      {graphicsCards.map(graphicsCard => (
+        <option key={graphicsCard.name} value={graphicsCard.name}>
+          {graphicsCard.name} - ${graphicsCard.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Memoria RAM */}
+  <div className="builder-section">
+    <h3>Elige tu Memoria RAM</h3>
+    <select onChange={handleRAMChange}>
+      <option value="">Selecciona una memoria RAM</option>
+      {rams.map(ram => (
+        <option key={ram.name} value={ram.name}>
+          {ram.name} - ${ram.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Almacenamiento */}
+  <div className="builder-section">
+    <h3>Elige tu Almacenamiento</h3>
+    <select onChange={handleStorageChange}>
+      <option value="">Selecciona un almacenamiento</option>
+      {storages.map(storage => (
+        <option key={storage.name} value={storage.name}>
+          {storage.name} - ${storage.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Fuente de Poder */}
+  <div className="builder-section">
+    <h3>Elige tu Fuente de Poder</h3>
+    <select onChange={handlePowerSupplyChange}>
+      <option value="">Selecciona una fuente de poder</option>
+      {powerSupplies.map(powerSupply => (
+        <option key={powerSupply.name} value={powerSupply.name}>
+          {powerSupply.name} - ${powerSupply.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Gabinetes */}
+  <div className="builder-section">
+    <h3>Elige tu Gabinete</h3>
+    <select onChange={handleCaseChange}>
+      <option value="">Selecciona un gabinete</option>
+      {cases.map(caseProduct => (
+        <option key={caseProduct.name} value={caseProduct.name}>
+          {caseProduct.name} - ${caseProduct.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Coolers */}
+  <div className="builder-section">
+    <h3>Elige tu Cooler</h3>
+    <select onChange={handleCoolerChange}>
+      <option value="">Selecciona un cooler</option>
+      {coolers.map(cooler => (
+        <option key={cooler.name} value={cooler.name}>
+          {cooler.name} - ${cooler.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Wifi */}
+  <div className="builder-section">
+    <h3>Elige tu Tarjeta Wifi</h3>
+    <select onChange={handleWifiChange}>
+      <option value="">Selecciona una tarjeta Wifi</option>
+      {wifis.map(wifi => (
+        <option key={wifi.name} value={wifi.name}>
+          {wifi.name} - ${wifi.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Monitores */}
+  <div className="builder-section">
+    <h3>Elige tu Monitor</h3>
+    <select onChange={handleMonitorChange}>
+      <option value="">Selecciona un monitor</option>
+      {monitors.map(monitor => (
+        <option key={monitor.name} value={monitor.name}>
+          {monitor.name} - ${monitor.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Teclados */}
+  <div className="builder-section">
+    <h3>Elige tu Teclado</h3>
+    <select onChange={handleKeyboardChange}>
+      <option value="">Selecciona un teclado</option>
+      {keyboards.map(keyboard => (
+        <option key={keyboard.name} value={keyboard.name}>
+          {keyboard.name} - ${keyboard.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Mouses */}
+  <div className="builder-section">
+    <h3>Elige tu Mouse</h3>
+    <select onChange={handleMouseChange}>
+      <option value="">Selecciona un mouse</option>
+      {mice.map(mouse => (
+        <option key={mouse.name} value={mouse.name}>
+          {mouse.name} - ${mouse.price}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  {/* Sección de Auriculares */}
+  <div className="builder-section">
+    <h3>Elige tus Auriculares</h3>
+    <select onChange={handleHeadphonesChange}>
+      <option value="">Selecciona tus auriculares</option>
+      {headphones.map(headphone => (
+        <option key={headphone.name} value={headphone.name}>
+          {headphone.name} - ${headphone.price}
+        </option>
+      ))}
+    </select>
+  </div>
 
   // Lógica de compatibilidad en Procesadores y Motherboards
   const handleProcessorChange = (e) => {
