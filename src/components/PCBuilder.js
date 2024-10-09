@@ -32,6 +32,7 @@ function PCBuilder({ products }) {
   const keyboards = products.filter(product => product.category === 'Teclado');
   const mice = products.filter(product => product.category === 'Mouse');
   const headphones = products.filter(product => product.category === 'Auriculares');
+
   // Función para sumar el precio total de los productos seleccionados
   const updateTotalPrice = () => {
     const prices = [
@@ -85,6 +86,7 @@ function PCBuilder({ products }) {
     }
     updateTotalPrice();
   };
+
   const handleGraphicsCardChange = (e) => {
     const selected = graphicsCards.find(gc => gc.name === e.target.value);
     setSelectedGraphicsCard(selected);
@@ -120,6 +122,7 @@ function PCBuilder({ products }) {
     setSelectedCooler(selected);
     updateTotalPrice();
   };
+
   const handleWifiChange = (e) => {
     const selected = wifis.find(wifi => wifi.name === e.target.value);
     setSelectedWifi(selected);
@@ -149,6 +152,7 @@ function PCBuilder({ products }) {
     setSelectedHeadphones(selected);
     updateTotalPrice();
   };
+
   // Función para generar el PDF con autoTable
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -207,13 +211,52 @@ function PCBuilder({ products }) {
         </select>
       </div>
 
+      {/* Sección de Motherboards */}
+      <div className="builder-section">
+        <h3>Elige tu Placa Madre</h3>
+        <select onChange={handleMotherboardChange}>
+          <option value="">Selecciona una placa madre</option>
+          {motherboards.map(motherboard => (
+            <option key={motherboard.name} value={motherboard.name}>
+              {motherboard.name} - {motherboard.subSubCategory} - ${motherboard.price}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Sección de Tarjetas Gráficas */}
+      <div className="builder-section">
+        <h3>Elige tu Tarjeta Gráfica</h3>
+        <select onChange={handleGraphicsCardChange}>
+          <option value="">Selecciona una tarjeta gráfica</option>
+          {graphicsCards.map(graphicsCard => (
+            <option key={graphicsCard.name} value={graphicsCard.name}>
+              {graphicsCard.name} - ${graphicsCard.price}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Continuar con el resto de las secciones de componentes */}
+      {/* ... (Secciones restantes de la misma manera) */}
+
       <button onClick={generatePDF}>Generar PDF</button>
 
       <div className="summary">
         <h3>Resumen de selección</h3>
         <p>Procesador: {selectedProcessor ? `${selectedProcessor.name} - ${selectedProcessor.subSubCategory} - $${selectedProcessor.price}` : 'No seleccionado'}</p>
-        {/* Continuar mostrando el resto de los componentes seleccionados */}
+        <p>Placa Madre: {selectedMotherboard ? `${selectedMotherboard.name} - ${selectedMotherboard.subSubCategory} - $${selectedMotherboard.price}` : 'No seleccionada'}</p>
+        <p>Tarjeta Gráfica: {selectedGraphicsCard ? `${selectedGraphicsCard.name} - $${selectedGraphicsCard.price}` : 'No seleccionada'}</p>
+        <p>Memoria RAM: {selectedRAM ? `${selectedRAM.name} - $${selectedRAM.price}` : 'No seleccionada'}</p>
+        <p>Almacenamiento: {selectedStorage ? `${selectedStorage.name} - $${selectedStorage.price}` : 'No seleccionado'}</p>
+        <p>Fuente de Poder: {selectedPowerSupply ? `${selectedPowerSupply.name} - $${selectedPowerSupply.price}` : 'No seleccionada'}</p>
+        <p>Gabinete: {selectedCase ? `${selectedCase.name} - $${selectedCase.price}` : 'No seleccionado'}</p>
+        <p>Cooler: {selectedCooler ? `${selectedCooler.name} - $${selectedCooler.price}` : 'No seleccionado'}</p>
+        <p>WiFi: {selectedWifi ? `${selectedWifi.name} - $${selectedWifi.price}` : 'No seleccionado'}</p>
+        <p>Monitor: {selectedMonitor ? `${selectedMonitor.name} - $${selectedMonitor.price}` : 'No seleccionado'}</p>
+        <p>Teclado: {selectedKeyboard ? `${selectedKeyboard.name} - $${selectedKeyboard.price}` : 'No seleccionado'}</p>
+        <p>Mouse: {selectedMouse ? `${selectedMouse.name} - $${selectedMouse.price}` : 'No seleccionado'}</p>
+        <p>Auriculares: {selectedHeadphones ? `${selectedHeadphones.name} - $${selectedHeadphones.price}` : 'No seleccionado'}</p>
         <h3>Total: ${totalPrice}</h3>
       </div>
     </div>
