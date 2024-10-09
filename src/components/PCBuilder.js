@@ -180,44 +180,5 @@ function PCBuilder({ products }) {
         ['1', selectedHeadphones ? selectedHeadphones.name : 'No seleccionado', selectedHeadphones ? `$${selectedHeadphones.price}` : '0', '21%', '0%', selectedHeadphones ? `$${selectedHeadphones.price}` : '0'],
       ],
     });
-
-    doc.setFontSize(12);
-    doc.text(`No Gravado/Exento: $${totalPrice}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.text(`Importe Total: $${totalPrice}`, 14, doc.lastAutoTable.finalY + 20);
-    doc.text(`Son Pesos ${totalPrice} con 00/100`, 14, doc.lastAutoTable.finalY + 30);
-
-    doc.save("presupuesto_1.pdf");
   };
-
-  return (
-    <div className="pc-builder-container container">
-      <h2>Armador de PC</h2>
-
-      {/* Mostrar todas las secciones */}
-      {/* Sección de procesadores */}
-      <div className="builder-section">
-        <h3>Elige tu Procesador</h3>
-        <select onChange={handleProcessorChange}>
-          <option value="">Selecciona un procesador</option>
-          {processors.map(processor => (
-            <option key={processor.name} value={processor.name}>
-              {processor.name} - {processor.subSubCategory} - ${processor.price}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Continuar con el resto de las secciones de componentes */}
-      <button onClick={generatePDF}>Generar PDF</button>
-
-      <div className="summary">
-        <h3>Resumen de selección</h3>
-        <p>Procesador: {selectedProcessor ? `${selectedProcessor.name} - ${selectedProcessor.subSubCategory} - $${selectedProcessor.price}` : 'No seleccionado'}</p>
-        {/* Continuar mostrando el resto de los componentes seleccionados */}
-        <h3>Total: ${totalPrice}</h3>
-      </div>
-    </div>
-  );
-}
-
-export default PCBuilder;
+};
