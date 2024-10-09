@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import jsPDF from 'jspdf'; // Importamos jsPDF
 
 function PCBuilder({ products }) {
   const [selectedProcessor, setSelectedProcessor] = useState(null);
@@ -35,6 +36,26 @@ function PCBuilder({ products }) {
     ];
     const sum = prices.reduce((acc, curr) => acc + Number(curr), 0);
     setTotalPrice(sum);
+  };
+
+  // Función para generar el PDF
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    // Agregar contenido al PDF
+    doc.text("Presupuesto de PC", 10, 10);
+    doc.text(`Procesador: ${selectedProcessor ? selectedProcessor.name : 'No seleccionado'}`, 10, 20);
+    doc.text(`Placa Madre: ${selectedMotherboard ? selectedMotherboard.name : 'No seleccionada'}`, 10, 30);
+    doc.text(`Tarjeta Gráfica: ${selectedGraphicsCard ? selectedGraphicsCard.name : 'No seleccionada'}`, 10, 40);
+    doc.text(`Memoria RAM: ${selectedRAM ? selectedRAM.name : 'No seleccionada'}`, 10, 50);
+    doc.text(`Almacenamiento: ${selectedStorage ? selectedStorage.name : 'No seleccionado'}`, 10, 60);
+    doc.text(`Fuente de Poder: ${selectedPowerSupply ? selectedPowerSupply.name : 'No seleccionada'}`, 10, 70);
+    doc.text(`Gabinete: ${selectedCase ? selectedCase.name : 'No seleccionado'}`, 10, 80);
+    doc.text(`Cooler: ${selectedCooler ? selectedCooler.name : 'No seleccionado'}`, 10, 90);
+    doc.text(`Total: $${totalPrice}`, 10, 100);
+
+    // Guardar el archivo PDF
+    doc.save("presupuesto_pc.pdf");
   };
 
   // Manejar la selección de los productos
@@ -177,6 +198,9 @@ function PCBuilder({ products }) {
           ))}
         </select>
       </div>
+
+      {/* Botón para generar el PDF */}
+      <button onClick={generatePDF}>Generar PDF</button>
 
       {/* Mostrar resumen de selección */}
       <div className="summary">
